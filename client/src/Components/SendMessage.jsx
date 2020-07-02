@@ -43,7 +43,7 @@ const SendMessage = props => {
           });
         }
       })
-      .catch(err => console.log(err.data));
+      .catch(err => console.log(err));
   };
   
   return (

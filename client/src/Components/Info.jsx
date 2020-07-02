@@ -1,51 +1,57 @@
 import React from "react";
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import json2mq from 'json2mq';
 
 const Info = props => {
+    const theme = useTheme();
+    const matches = useMediaQuery(
+      json2mq({
+        maxWidth: 992,
+      }),
+    );
+
     return(
       <>
-        <table className="table text-white">
-          <thead>
-            <tr>
-              <th><h1 className="font-weight-bold">Kenji Lam</h1></th>
-              <th><p  className="h2 font-italic">Digital Marketing Specialist</p></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Location:</th>
-              <td>Washington D.C. Metropolian Area</td>
-            </tr>
-            <tr>
-              <th>Email:</th>
-              <td>kenji.lam.92@gmail.com</td>
-            </tr>
-            <tr>
-              <th>Phone:</th>
-              <td>703-622-0116</td>
-            </tr>
-            <tr>
-              <th>Career Status:</th>
-              <td>Freelancer</td>
-            </tr>
-          </tbody>
-        </table>
-        
-        {/* <div className="row">
-          <p className="col-sm-4 font-weight-bold"></p>
-          <p className="col-sm-8"></p>
+        <div className="row w-100 ml-3">
+          {matches?
+          <div className="row w-100 mb-2 align-items-center border-bottom border-white">
+            <div className="col-sm-5 text-center">
+              <img  className="w-75 rounded-circle m-2"
+                    src="../images/kenjilam92_square.jpg" 
+                    alt="Kenji Lam"/>
+            </div>
+            <div className="col-sm-7 text-center">
+              <h1 className="h2 font-weight-bold text-nowrap text-responsive">Kenji Lam</h1>
+              <p className="h5 font-italic text-responsive">Digital Marketing Specialist</p>
+            </div> 
+          </div>
+          :
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+              <h1 className="h2 col-sm-5 font-weight-bold text-nowrap text-responsive">Kenji Lam</h1>
+              <p className="h4 col-sm-7 text-nowrap font-italic text-responsive">Digital Marketing Specialist</p>
+          </div>
+          }
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+            <p className="col-sm-5 font-weight-bold">Location:</p>
+            <p className="col-sm-7">Washington D.C. Metropolian Area</p>
+          </div>
+
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+            <p className="col-sm-5 font-weight-bold">Email:</p>
+            <p className="col-sm-7">kenji.lam.92@gmail.com</p>
+          </div>
+
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+            <p className="col-sm-5 font-weight-bold">Phone:</p>
+            <p className="col-sm-7">703-622-0116</p>
+          </div>
+
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+            <p className="col-sm-5 font-weight-bold">Career Status:</p>
+            <p className="col-sm-7">Freelancer</p>
+          </div>
         </div>
-        <div className="row">
-          <p className="col-sm-4 font-weight-bold"></p>
-          <p className="col-sm-8"></p>
-        </div>
-        <div className="row">
-          <p className="col-sm-4 font-weight-bold"></p>
-          <p className="col-sm-8"></p>
-        </div>
-        <div className="row">
-          <p className="col-sm-4 font-weight-bold"></p>
-          <p className="col-sm-8"></p>
-        </div> */}
       </>
     );
 }

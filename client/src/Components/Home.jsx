@@ -12,8 +12,8 @@ const Home = props =>{
             <img className="w-100 "src="/images/kenjilam92.jpg" alt="Kenji Lam"/>
           </div>
           <div className="col-xl-10 col-md-8">
-            <div className="row align-items-center">
-              <div className="col-xl-6">
+            <div className="row justify-content-center align-items-center">
+              <div className="col-xl-6 d-flex justify-content-center">
                 <Info/>
               </div>
               <div className="col-xl-6">

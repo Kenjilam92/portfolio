@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = props =>{
     return(
-        <div className="d-flex bg-success p-2 justify-content-around">
+        <div className="d-flex bg-success p-2 justify-content-around text-center">
             <a href ="https://www.facebook.com/Kenjil.lam"><img className="w-50" src="/images/Facebook_2.png" alt="Facebook"/></a>
             <a href ="https://www.instagram.com/kenji_lam1992/"><img className="w-50" src="/images/Instagram_2.png" alt="instagram"/></a>
             <a href ="https://www.Linkedin.com/in/kenjilam92/"><img className="w-50" src="/images/Linkedin_2.png" alt="LinkedIn"/></a>

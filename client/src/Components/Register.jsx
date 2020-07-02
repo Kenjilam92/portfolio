@@ -124,7 +124,7 @@ const Register = props => {
                 <div className="row mb-2 justify-content-end align-items-end">
                     <label  htmlFor="CFPass"
                             className="col-sm-4"
-                            >Confirm Password:
+                            >Confirm PW:
                     </label>
                     <input  type="password" 
                             htmlFor="CFPass" 

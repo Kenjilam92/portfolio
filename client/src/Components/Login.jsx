@@ -63,7 +63,7 @@ const Login = props =>{
                             className="col-sm-4"
                             >Password:
                     </label>
-                    <input  type="Loginpassword" 
+                    <input  type="password" 
                             htmlFor="LoginPass" 
                             value = {LoginPass}
                             className="form-control col-sm-8"

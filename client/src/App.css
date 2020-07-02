@@ -56,25 +56,15 @@ body{
   }
 }
 
-@media only screen and (min-width: 1140px){
+/* @media only screen and (min-width: 992px){
   .me-sm{
     display: none;
   }
-}
-@media only screen and (max-width: 1140px) {
+} */
+@media only screen and (max-width: 992px) {
   .me {
     display: none; 
   }
 }
 
-@media only screen and (max-width: 960px) {
-  h1 {
-    font-size:  2rem;
-  }
-  .h1 {
-    font-size: 2rem;
-  }
-  
-}
-@media only screen and (max-width: 720px) {}
-@media only screen and (max-width: 540px) {}
+

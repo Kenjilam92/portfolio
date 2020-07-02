@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link} from "@reach/router";
+import Moment from 'react-moment';
+import PleaseSignIn from "./PleaseSignIn";
 const Messages = props =>{
     const [Messages,setMessages] = useState([]);
     const [User, setUser] = useState({});
@@ -27,6 +29,7 @@ const Messages = props =>{
             <h1>Welcome, <span className="text-warning">{User.name}</span>!</h1>
             <Link to="/invitation">Create an invitation</Link>
         </div>
+        <div className="row w-100 overflow-auto">
         <table className="table table-bordered text-white">
             <thead className = "thead-dark">
                 <tr>
@@ -37,10 +40,14 @@ const Messages = props =>{
                     <th>Message</th>
                 </tr>
             </thead>
-            <tbody className="overflow-auto">
+            <tbody>
                 {Messages.map( (message, i) =>
                 <tr key={i}>
-                    <td>{message.createAt}</td>
+                    <td className="text-nowrap">
+                        <Moment format="YYYY-MM-DD - HH:mm" local>
+                            {message.createAt}
+                        </Moment>
+                    </td>
                     <td>{message.name}</td>
                     <td>{message.email}</td>
                     <td>{message.phone}</td>
@@ -49,9 +56,10 @@ const Messages = props =>{
                 )}
             </tbody>
         </table>
+        </div>
         </>
         :
-        <p className="h1 text-warning"> Please Sign In to see this page</p>
+        <PleaseSignIn/>
         }
         </>
     );
