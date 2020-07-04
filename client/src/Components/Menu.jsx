@@ -1,13 +1,11 @@
 import React from "react";
 import {Link} from "@reach/router";
 import axios from "axios";
-import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import json2mq from 'json2mq';
 
 const Menu = props => {
 
-    const theme = useTheme();
     const matches = useMediaQuery(
       json2mq({
         maxWidth: 600,
@@ -26,7 +24,7 @@ const Menu = props => {
       <>
       {matches?
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-      <a className="navbar-brand" href="#">Menu</a>
+      <Link className="navbar-brand" to="/">Kenji Lam</Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>

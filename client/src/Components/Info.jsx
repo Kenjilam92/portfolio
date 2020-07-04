@@ -1,10 +1,9 @@
 import React from "react";
-import { useTheme } from '@material-ui/core/styles';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import json2mq from 'json2mq';
 
 const Info = props => {
-    const theme = useTheme();
     const matches = useMediaQuery(
       json2mq({
         maxWidth: 992,

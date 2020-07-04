@@ -2,12 +2,14 @@ import React from "react";
 
 const Card = props => {
     return(
-        <div className="p-2 text-center">
-            <img src={props.imglink} 
+        <div className="d-flex flex-column align-items-center text-center p-2 ml-1 mr-1" style={{width : 75+"px"}}>
+            <p>
+                <img src={props.imglink} 
                  alt={props.imgalt}
-                 className="rounded-circle"
-                 style={{height : 75+"px"}}
+                 className="rounded-circle bg-white"
+                 style={{width : 75+"px"}}
                  />
+            </p>
             <p>{props.children}</p>
         </div>
     );
