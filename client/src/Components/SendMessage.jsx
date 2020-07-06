@@ -23,15 +23,12 @@ const SendMessage = props => {
     };
     axios.post("/api/messages/new",newMessage)
       .then(res => {
-        console.log(res.data.errors);
         if(res.data.errors)
         {
           setErrors(res.data.errors);
         }
         else
-        {
-          console.log("Message sent");
-          setName("");
+        { setName("");
           setPhone("");
           setEmail("");
           setText("");

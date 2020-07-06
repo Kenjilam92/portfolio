@@ -3,7 +3,8 @@ import {useState} from "react";
 import axios from "axios";
 import {navigate} from "@reach/router";
 const Register = props => {
-    const [Name,setName] = useState("");
+    const [FirstName,setFirstName] = useState("");
+    const [LastName,setLastName] = useState("");
     const [Email,setEmail] = useState("");
     const [Phone,setPhone] = useState("");
     const [Pass,setPass] = useState("");
@@ -12,11 +13,14 @@ const Register = props => {
     const [Code,setCode] = useState("");
     const Register = e =>{
         e.preventDefault();
-        
-        
-        
+        if (Code===""||Code===" ")
+        {   
+            setErrors({code : "Invitation code is required"});
+        }
+        else{
         const newUser = {
-            "Name" : Name,
+            "FirstName" : FirstName,
+            "LastName" : LastName,
             "Email" : Email,
             "Phone" : Phone,
             "Password" : Pass,
@@ -25,20 +29,22 @@ const Register = props => {
         axios.post(`/api/users/register/${Code}`,newUser)
             .then(res=> {
                 if(res.data.errors){
-                    console.log("validation");
                     setErrors(res.data.errors);
                 }
                 else{
-                    setName("");
+                    setFirstName("");
+                    setLastName("");
                     setEmail("");
                     setPhone("");
                     setPass("");
                     setCFPass("");
-                    setErrors({});    
-                    navigate("/messages");
+                    setErrors({});
+                    props.login();  
                 }
             })
             .catch (err=>console.log(err));
+        }
+        navigate("/blog");
     }
     ////////////////////////////////////
     
@@ -55,6 +61,7 @@ const Register = props => {
                             htmlFor="Code" 
                             value = {Code}
                             className="form-control col-sm-8"
+                            placeholder="Code is required! Please contact me for the code!"
                             onChange ={e=>setCode(e.target.value)}
                             />
                     <span className="text-warning">
@@ -62,18 +69,33 @@ const Register = props => {
                     </span>
                 </div>
                 <div className="row mb-2 justify-content-end align-items-end">
-                    <label  htmlFor="Name"
-                            className="col-sm-4"
-                            >Name:
-                    </label>
+                    <label  htmlFor="FirstName"
+                                className="col-sm-4"
+                                >First Name:
+                        </label>
                     <input  type="text" 
-                            htmlFor="Name" 
-                            value = {Name}
+                            htmlFor="FirstName" 
+                            value = {FirstName}
                             className="form-control col-sm-8"
-                            onChange ={e=>setName(e.target.value)}
+                            onChange ={e=>setFirstName(e.target.value)}
                             />
                     <span className="text-warning">
-                        {Errors.Name? Errors.Name[0] : null}
+                        {Errors.FirstName? Errors.FirstName[0] : null}
+                    </span>
+                </div>
+                <div className="row mb-2 justify-content-end align-items-end">    
+                    <label  htmlFor="LastName"
+                            className="col-sm-4"
+                            >Last Name:
+                    </label>
+                    <input  type="text" 
+                            htmlFor="LastName" 
+                            value = {LastName}
+                            className="form-control col-sm-8"
+                            onChange ={e=>setLastName(e.target.value)}
+                            />
+                    <span className="text-warning">
+                        {Errors.LastName? Errors.LastName[0] : null}
                     </span>
                 </div>
                 <div className="row mb-2 justify-content-end align-items-end">

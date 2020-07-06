@@ -2,10 +2,10 @@ import React,{useState,useEffect} from "react";
 import axios from "axios";
 import Moment from 'react-moment';
 import PleaseSignIn from "./PleaseSignIn";
-
+import NoAuthority from "./NoAuthority";
+import {Link} from "@reach/router";
 const Invitation = props =>{
     const [Invitations,setInvitation] = useState([]);
-    const [User,setUser] = useState({});
     const [IVCode,setIVCode] = useState ("");
     const [Errors,setErrors] = useState({});
     const fetchInvitation = () =>{
@@ -18,8 +18,6 @@ const Invitation = props =>{
                 else
                 {
                     setInvitation(res.data.invitations);
-                    console.log(res.data);
-                    setUser(res.data.user);
                 }
             })
             .catch(err=> console.log(err));
@@ -32,7 +30,7 @@ const Invitation = props =>{
         e.preventDefault();
         const newInvitation = {
             "Code" : IVCode,
-            "UserId": User.userId
+            "UserId": props.user.userId
         }
         console.log(newInvitation);
         axios.post("/api/invitation/new",newInvitation)
@@ -55,21 +53,35 @@ const Invitation = props =>{
         <>
         {props.login?
             <div className="col w-100">
-                <form className="d-flex justify-content-around form-group text-white" onSubmit={CreateCode}>
-                    <label htmlFor="Code">New Inviation:</label>
+                {props.user.role === "Owner" || props.user.role === "Supervisor" ?
+                <form className="row align-items-center justify-content-around text-white m-3" onSubmit={CreateCode}>
+                    
+                    <label  htmlFor="Code"
+                            className="col-sm-2 h5"
+                            >New Inviation:
+                    </label>
                     <input  type="text"
                             value={IVCode}
-                            className = "form-control"
+                            className = "form-control col-sm-6"
                             onChange={e=>setIVCode ( e.target.value ) }
-                    />
-                    <span className="text-warning">{Errors.Code? Errors.Code[0] : ""}</span>
-                    <button className="btn btn-success btn-sm text-nowrap">Create Code</button>
+                            />
+                    <button className="col-sm-2 btn btn-success btn-sm "
+                            >Create Code
+                    </button>
                 </form>
-                <div className="row w-100 overflow-auto">
+                :null}
+                 <p className="text-warning text-center">{Errors.Code? Errors.Code[0] : ""}</p>
+                {props.user.role === "Owner" || props.user.role === "Supervisor" || props.user.role === "Staff"?
+                <>
+                <div className="d-flex justify-content-between mb-3">
+                    <h3 className="text-warning">Invitations</h3>
+                    <Link to = "/blog" className ="btn btn-secondary">Go Back</Link>
+                </div>
+                <div className="row overflow-auto">
                     <table className="table table-bodered text-white">
                         <thead className="thead-dark">
-                            <tr>
-                                <th>Invitation Code</th>
+                            <tr className="text-nowrap text-center">
+                                <th>Codes</th>
                                 <th>Used</th>
                                 <th>Create At</th>
                                 <th>Update At</th>
@@ -77,16 +89,25 @@ const Invitation = props =>{
                         </thead>
                         <tbody>
                             {Invitations.map((invitation,i) =>
-                            <tr key={i}>
+                            <tr key={i}
+                                className={invitation.isUsed? "text-nowrap text-center" : "text-nowrap text-center text-warning"}>
                                 <td>{invitation.code}</td>
                                 <td>{invitation.isUsed? "yes" : "not yet"}</td>
                                 <td>
-                                    <Moment format="YYYY-MM-DD - HH:mm" local>
+                                    <Moment format="YYYY-MM-DD" local>
+                                        {invitation.createAt}
+                                    </Moment>
+                                    <br/>
+                                    <Moment format="HH:mm" local>
                                         {invitation.createAt}
                                     </Moment>
                                 </td>
                                 <td>
-                                    <Moment format="YYYY-MM-DD - HH:mm" local>
+                                    <Moment format="YYYY-MM-DD" local>
+                                        {invitation.updateAt}
+                                    </Moment>
+                                    <br/>
+                                    <Moment format="HH:mm" local>
                                         {invitation.updateAt}
                                     </Moment>
                                 </td>
@@ -95,6 +116,10 @@ const Invitation = props =>{
                         </tbody>
                     </table>
                 </div>
+                </>
+                :
+                <NoAuthority/>
+                }
             </div>
         :
         <PleaseSignIn/>

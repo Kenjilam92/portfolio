@@ -21,21 +21,40 @@ namespace portfolio_backend.Controllers
         {
             databases = context;
         }
-        // [HttpGet("")]
-        // public IActionResult Index()
-        // {
-        //     return View();
-        // }
+        
+        ////////////////////////////////////////////////////////////////Login Logout
 
-        [HttpPost]
-        [Route("api/messages/new")]
-        public JsonResult NewMessage([FromBody]Message newMessage)
+        [HttpGet("api/session")]
+        public JsonResult CheckSession()
         {
-            if (ModelState.IsValid)
+            if(HttpContext.Session.GetInt32("UserId") == null)
+            {
+                return Json (new{IsSignIn = false});
+            }
+            else if(databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))==null)
+            {
+                return Json (new{ IsSignIn = false,
+                                  errors = "user not in database"});
+            }
+            else
+            {
+                return Json (new { IsSignIn = true,
+                                   user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))});
+            }
+        }
+        
+        [HttpPost ("api/users/login")]
+        public JsonResult Login([FromBody]LoginUser user)
+        {
+            if(databases.Login(user,ModelState))
             {   
-                databases.Messages.Add(newMessage);
-                databases.SaveChanges();
-                return Json(new {msg = "ok"});
+                var userData = databases.Users
+                    .FirstOrDefault(u => u.Email == user.LoginEmail);
+                HttpContext.Session.SetInt32("UserId",userData.UserId);
+                return Json(new {   user = userData,
+                                    IsSignIn = true
+                                }
+                );
             }
             var errorList = ModelState.ToDictionary(
                 kvp => kvp.Key,
@@ -44,16 +63,32 @@ namespace portfolio_backend.Controllers
             return Json( new {  msg = "failed",
                                 errors = errorList
             });
+        }       
+        
+        [HttpGet("api/logout")]
+        public JsonResult Logout ()
+        {   
+            HttpContext.Session.Clear();
+            return Json (new {msg = "loged out"});
         }
-        [Route ("api/users/register/{code}")]
+        
+
+        //////////////////////////////////////////////////////////////////User
+        [HttpPost ("api/users/register/{code}")]
         public JsonResult NewUser([FromBody]User newUser, string code)
         {   
+            if(code=="" || code ==null)
+            {
+                return Json( new {  msg = "failed",
+                                    errors = new { code = "you must need a code to register! Please contact me for the code"}
+                });
+            }
             if (databases.Invitations.FirstOrDefault(i => i.Code == code && i.IsUsed == false) == null)
             {
                 System.Console.WriteLine("##############################");
                 return Json( new {  msg = "failed",
-                                    errors = new { code = "this is invitation is not valid "}
-            });
+                                    errors = new { code = "this invitation code is not valid "}
+                });
             }  
             if(databases.Register(newUser,ModelState))
             {
@@ -73,34 +108,59 @@ namespace portfolio_backend.Controllers
                                 errors = errorList
             });
         }
-        [Route ("api/users/login")]
-        public JsonResult Login([FromBody]LoginUser user)
+        
+        
+        [HttpPut("api/users/{id}")]
+        public JsonResult ChangeUserRole([FromBody]Dictionary<string,string> a, [FromRoute]int id)
         {
-            if(databases.Login(user,ModelState))
-            {   
-                var userData = databases.Users
-                    .FirstOrDefault(u => u.Email == user.LoginEmail);
-                HttpContext.Session.SetInt32("UserId",userData.UserId);
-                return Json(new {   user = userData,
-                                    IsSignIn = true
+            if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner" ||
+                HttpContext.Session.GetInt32("UserId")==null)
+            {
+                databases.Users.FirstOrDefault(u => u.UserId == id).Role = a["role"];
+                databases.SaveChanges();
+                return Json (new {msg = "new role set"});
+            }
+            return Json(new{errors = "don't have authority"});
+        }
+        
+        [HttpDelete("api/users/{id}")]
+        public JsonResult DeleteUser(int id)
+        {   
+            if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner")
+            {
+                databases.Users.Remove(
+                    databases.Users.FirstOrDefault(m => m.UserId==id)
+                );
+                databases.SaveChanges();
+                return Json(new{msg = "deleted user"});
+            }
+            return Json(new{errors = "don't have authority"});
+        }
+        
+        [HttpGet("api/users")]
+        public JsonResult FetchUsers () 
+        {
+            if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner")
+            {
+                return Json(new{ msg= "ok", 
+                                 users = databases.Users.OrderBy(u=>u.FirstName)
+                                                        .OrderBy(u => u.Role)
+                                                        .ToList()
                                 });
             }
-            var errorList = ModelState.ToDictionary(
-                kvp => kvp.Key,
-                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-            );
-            return Json( new {  msg = "failed",
-                                errors = errorList
-            });
+            return Json (new{ errors = "not owner"});
         }
-        [Route("api/invitation/new")]
-        public JsonResult NewInvitaion ([FromBody]Invitation newInvite)
+        
+        //////////////////////////////////////////////////////////////////Message
+        
+        [HttpPost("api/messages/new")]
+        public JsonResult NewMessage([FromBody]Message newMessage)
         {
             if (ModelState.IsValid)
-            {
-                databases.Invitations.Add(newInvite);
+            {   
+                databases.Messages.Add(newMessage);
                 databases.SaveChanges();
-                return Json(new{msg = "ok"});
+                return Json(new {msg = "ok"});
             }
             var errorList = ModelState.ToDictionary(
                 kvp => kvp.Key,
@@ -110,14 +170,13 @@ namespace portfolio_backend.Controllers
                                 errors = errorList
             });
         }
-
-        [HttpGet]
-        [Route("api/messages")]
-        public JsonResult AllMessages()
+        
+        [HttpGet("api/messages")]
+        public JsonResult FetchMessages()
         {   
             if (HttpContext.Session.GetInt32("UserId") == null)
             {
-                return Json( new {  msg = "not sign in",
+                return Json( new{   msg = "not sign in",
                                     IsSignIn = false
                                 });
             }
@@ -130,28 +189,90 @@ namespace portfolio_backend.Controllers
                                 user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
                             });
         }
-        [Route("api/logout")]
-        public JsonResult Logout ()
-        {   
-            HttpContext.Session.Clear();
-            return Json (new {msg = "loged out"});
+        
+        [HttpGet("api/messages/{id}/{cmd}")]
+        public JsonResult ReplyMessage(int id, string cmd)
+        {
+            System.Console.WriteLine("###################################");
+            System.Console.WriteLine(cmd);
+            var select = databases.Messages.FirstOrDefault(m => m.MessageId == id);
+            if(select==null)
+            {
+                return Json(new {errors = "can't find message"});
+            }
+            if (cmd == "replied")
+            {
+                select.IsReplied = true;
+                select.UpdateAt = DateTime.Now;
+                databases.SaveChanges();
+                return Json(new{msg = "replied"});
+            }
+            else if(cmd == "unreplied")
+            {
+                select.IsReplied = false;
+                select.UpdateAt = DateTime.Now;
+                databases.SaveChanges();
+                return Json(new{msg = "unreplied"});
+            }
+            return Json(new{msg = "false api"});
         }
-        [Route("api/invitations")]
+        
+        [HttpDelete("api/messages/{id}")]
+        public JsonResult DeleteMessage(int id)
+        {
+            if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner")
+            {
+                databases.Messages.Remove(
+                    databases.Messages.FirstOrDefault(m => m.MessageId==id)
+                );
+                databases.SaveChanges();
+                return Json(new{msg = "deleted message"});
+            }
+            
+            return Json(new{errors = "don't have authority"});
+        }
+
+        //////////////////////////////////////////////////////////////////Invitation
+        
+        [HttpPost("api/invitation/new")]
+        public JsonResult NewInvitaion ([FromBody]Invitation newInvite)
+        {
+            if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner" ||
+                databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Supervisor")
+            {
+                if (ModelState.IsValid)
+                {
+                    databases.Invitations.Add(newInvite);
+                    databases.SaveChanges();
+                    return Json(new{msg = "ok"});
+                }
+                var errorList = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+                return Json( new {  msg = "failed",
+                                    errors = errorList
+                });
+            }
+            return Json(new{errors = "don't have authority"});            
+        }    
+        
+        [HttpGet("api/invitations")]
         public JsonResult ManageInvitation()
         {   
             if (HttpContext.Session.GetInt32("UserId") == null)
             {
-                return Json (new{ errors = "please login"});
+                return Json (new{ errors = "not login"});
             }
             var invitations = databases.Invitations
-                .Where(i => i.UserId == HttpContext.Session.GetInt32("UserId"))
                 .OrderBy(i => i.CreateAt)
+                .OrderBy(i => i.IsUsed)
                 .Select(i => new{i.Code,i.IsUsed,i.CreateAt,i.UpdateAt})
                 .ToList();
-            return Json(new {   invitations = invitations,
-                                user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
-                });
+            return Json(new { invitations = invitations });
         }
         
+        /////////////////////////////////////////////////////////////
+           
     }
 }

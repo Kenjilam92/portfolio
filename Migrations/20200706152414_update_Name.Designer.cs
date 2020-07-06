@@ -9,8 +9,8 @@ using portfolio_backend.Models;
 namespace portfolio_backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200626133244_invitations")]
-    partial class invitations
+    [Migration("20200706152414_update_Name")]
+    partial class update_Name
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,8 +58,7 @@ namespace portfolio_backend.Migrations
                         .IsRequired();
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                        .IsRequired();
 
                     b.Property<string>("Text")
                         .IsRequired();
@@ -81,15 +80,20 @@ namespace portfolio_backend.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
                         .IsRequired();
 
                     b.Property<string>("Password")
                         .IsRequired();
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                        .IsRequired();
+
+                    b.Property<string>("Role")
+                        .IsRequired();
 
                     b.Property<DateTime>("UpdateAt");
 

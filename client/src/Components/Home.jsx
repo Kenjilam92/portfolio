@@ -4,19 +4,19 @@ import SendMessage from "./SendMessage";
 
 const Home = props =>{
     return (
-        <div className="h-fit w-100 oveflow-auto">
+        <div className="w-100 oveflow-auto">
         {/* body */}
-        <div className="row m-0 p-3 text-white bg-secondary justify-content-center align-items-center" style={{minHeight : 35+ "vh"}}>  
+        <div className="row m-0 p-3 text-white justify-content-center align-items-start" style={{minHeight : 35+ "vh"}}>  
           {/* picture */}
           <div className="col-xl-2 col-md-4 text-center me">
             <img className="w-100 "src="/images/kenjilam92.jpg" alt="Kenji Lam"/>
           </div>
           <div className="col-xl-10 col-md-8">
-            <div className="row justify-content-center align-items-center">
-              <div className="col-xl-6 d-flex justify-content-center">
+            <div className="row justify-content-center align-items-start">
+              <div className="col-xl-7 d-flex justify-content-center">
                 <Info/>
               </div>
-              <div className="col-xl-6">
+              <div className="col-xl-5">
                 <SendMessage/>
               </div>
             </div>

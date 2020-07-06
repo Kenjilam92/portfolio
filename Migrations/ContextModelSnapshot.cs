@@ -56,8 +56,7 @@ namespace portfolio_backend.Migrations
                         .IsRequired();
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                        .IsRequired();
 
                     b.Property<string>("Text")
                         .IsRequired();
@@ -79,15 +78,20 @@ namespace portfolio_backend.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
                         .IsRequired();
 
                     b.Property<string>("Password")
                         .IsRequired();
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                        .IsRequired();
+
+                    b.Property<string>("Role")
+                        .IsRequired();
 
                     b.Property<DateTime>("UpdateAt");
 

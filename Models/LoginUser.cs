@@ -6,10 +6,11 @@ namespace portfolio_backend.Models
     {
         [Required]
         [DataType(DataType.EmailAddress)]
+        [Display(Name="Email")]
         public string LoginEmail {get;set;}
         [Required]
         [DataType(DataType.Password)]
-        [MinLength(8,ErrorMessage="Password need to be at least 8 charcters")]
+        [Display(Name="Password")]
         public string LoginPassword {get;set;}
     }
 }

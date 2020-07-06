@@ -21,14 +21,14 @@ const Info = props => {
                     alt="Kenji Lam"/>
             </div>
             <div className="col-sm-7 text-center">
-              <h1 className="h2 font-weight-bold text-nowrap text-responsive">Kenji Lam</h1>
-              <p className="h5 font-italic text-responsive">Digital Marketing Specialist</p>
+              <h1 className="h2 font-weight-bold text-nowrap text-warning">Kenji Lam</h1>
+              <p className="h5 font-italic">Digital Marketing Specialist</p>
             </div> 
           </div>
           :
           <div className="row w-100 mb-2 align-items-end border-bottom border-white">
-              <h1 className="h2 col-sm-5 font-weight-bold text-nowrap text-responsive">Kenji Lam</h1>
-              <p className="h4 col-sm-7 text-nowrap font-italic text-responsive">Digital Marketing Specialist</p>
+              <h1 className="h2 col-sm-5 font-weight-bold text-nowrap text-warning">Kenji Lam</h1>
+              <p className="h4 col-sm-7 text-nowrap font-italic">Digital Marketing Specialist</p>
           </div>
           }
           <div className="row w-100 mb-2 align-items-end border-bottom border-white">

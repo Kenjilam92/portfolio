@@ -11,7 +11,7 @@ const ProjectList = props =>{
         <div className="row align-content-center">
           <div className="col-xl-6">
             <p ><a className="h2 text-warning" href="http://vanhoagroup.com">vanhoagroup.com</a></p>
-            <ul className="text-justify" style={{marginLeft:  (-25)+"px"}}>
+            <ul style={{marginLeft:  (-25)+"px"}}>
               <li>Mobile - Friendly</li>
               <li>A commercial project that was built by using online building platform Wix.com</li>
               <li>SEO strategies is applied </li>
@@ -34,7 +34,7 @@ const ProjectList = props =>{
         <div className="row align-content-center">
           <div className="col-xl-6">
             <p ><a className="h2 text-warning" href="https://github.com/Kenjilam92/flashcards_game">The Flashcards Game (progressing)</a></p>
-            <ul className="text-justify" style={{marginLeft:  (-25)+"px"}}>
+            <ul style={{marginLeft:  (-25)+"px"}}>
               <li>Mobile - Friendly</li>
               <li>A private project that was built by using MERN framework</li>
               <li>A great study tools which help user learning new words or concepts.</li>
@@ -65,7 +65,7 @@ const ProjectList = props =>{
         <div className="row align-content-center">
           <div className="col-xl-6">
             <p ><a className="h2 text-warning" href="https://github.com/Kenjilam92/flashcards_game">My Portfolio</a></p>
-            <ul className="text-justify" style={{marginLeft:  (-25)+"px"}}>
+            <ul style={{marginLeft:  (-25)+"px"}}>
               <li>Mobile - Friendly</li>
               <li>A personal project was built by a combination of 2 different languages C# and JavaScript</li>
               <li>The backend use ASP.NET framework, and connect MySQL database</li>

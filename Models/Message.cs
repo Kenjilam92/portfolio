@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using portfolio_backend.Models.Validation;
 
 namespace portfolio_backend.Models
 {
@@ -16,11 +17,11 @@ namespace portfolio_backend.Models
         public string Text {get;set;}
         [Required]
         [DataType(DataType.EmailAddress)]
+        [RegexEmail]
         public string Email {get;set;}
         [Required]
         [DataType(DataType.PhoneNumber)]
-        [MinLength(10,ErrorMessage="Please type 10 numbers")]
-        [MaxLength(10,ErrorMessage="Please type 10 numbers")]
+        [RegexPhone]
         public string Phone {get;set;}
         public bool IsReplied {get;set;} = false;
         [Required]

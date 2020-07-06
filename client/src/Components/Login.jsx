@@ -10,38 +10,38 @@ const Login = props =>{
     //////////
     
     const Login = e =>{
-        e.preventDefault();
-        const LoginUser = {
-            "LoginEmail": LoginEmail,
-            "LoginPassword" : LoginPass
-        }
-        axios.post("/api/users/login",LoginUser)
-            .then(res=>{
-                if (res.data.errors)
-                {   
-                    console.log(res.data);
-                    setErrors(res.data.errors);
-                }
-                else
-                {
-                    console.log("Login Successfully!");
-                    setErrors({});
-                    setLoginPass("");
-                    setLoginEmail("");
-                    props.login(true);
-                    navigate("/messages");
-                }
-            })
-            .catch(err=> console.log(err));
+      e.preventDefault();
+      const LoginUser = {
+          "LoginEmail": LoginEmail,
+          "LoginPassword" : LoginPass
+      }
+      axios.post("/api/users/login",LoginUser)
+        .then(res=>{
+          if (res.data.errors){   
+            setErrors(res.data.errors);
+          }
+          else{
+            console.log("Login Successfully!");
+            setErrors({});
+            setLoginPass("");
+            setLoginEmail("");
+            props.setUser(res.data.user);
+            props.login(true);
+            navigate("/blog")
+          }
+        })
+        .catch(err=> console.log(err));
     }
+    const RegisterNow = e => props.checkSession();
+
     return(
         <>
         <div className="row m-0 p-3 text-white bg-secondary justify-content-center">
-            <div className="col-md-6">
-                <Register/>
+            <div className="col-md-6 ">
+                <Register login={RegisterNow}/>
             </div>
             {/* //////////////////////////// */}
-            <form onSubmit={Login} className="col-md-6 form-group ">
+            <form onSubmit={Login} className="col-md-6 order-md-2 order-first form-group ">
                 <h3 className="text-center mb-4">Login</h3>
                 <div className="row mb-2 justify-content-end align-items-end">
                     <label  htmlFor="LoginEmail"

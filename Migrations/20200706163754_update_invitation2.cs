@@ -2,7 +2,7 @@
 
 namespace portfolio_backend.Migrations
 {
-    public partial class updatephone2 : Migration
+    public partial class update_invitation2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

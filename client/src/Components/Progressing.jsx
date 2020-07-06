@@ -9,7 +9,7 @@ const Progressing = props =>{
                      alt="Kenji Lam"/>
             </div>
             <div className="col-sm-9">
-              <p className="h1 text-warning">Sorry! This page is progressing and will be published soon!</p>
+              <p className="h1 text-warning">Sorry! This section is progressing and will be published soon!</p>
             </div>
         </div>
     );

@@ -9,8 +9,8 @@ using portfolio_backend.Models;
 namespace portfolio_backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200623195530_updateNamePhone")]
-    partial class updateNamePhone
+    [Migration("20200706163754_update_invitation2")]
+    partial class update_invitation2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,29 @@ namespace portfolio_backend.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("portfolio_backend.Models.Invitation", b =>
+                {
+                    b.Property<int>("InvitationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreateAt");
+
+                    b.Property<bool>("IsUsed");
+
+                    b.Property<DateTime>("UpdateAt");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("InvitationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Invitations");
+                });
 
             modelBuilder.Entity("portfolio_backend.Models.Message", b =>
                 {
@@ -34,7 +57,8 @@ namespace portfolio_backend.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("Phone");
+                    b.Property<string>("Phone")
+                        .IsRequired();
 
                     b.Property<string>("Text")
                         .IsRequired();
@@ -56,7 +80,10 @@ namespace portfolio_backend.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
                         .IsRequired();
 
                     b.Property<string>("Password")
@@ -65,11 +92,22 @@ namespace portfolio_backend.Migrations
                     b.Property<string>("Phone")
                         .IsRequired();
 
+                    b.Property<string>("Role")
+                        .IsRequired();
+
                     b.Property<DateTime>("UpdateAt");
 
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("portfolio_backend.Models.Invitation", b =>
+                {
+                    b.HasOne("portfolio_backend.Models.User", "Creator")
+                        .WithMany("Invitations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
