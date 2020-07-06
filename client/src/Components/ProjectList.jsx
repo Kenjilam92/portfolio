@@ -45,7 +45,7 @@ const ProjectList = props =>{
           <div className="col-xl-5">
             <p className="h5 font-weight-bold text-warning">Technologies:</p>
             <div className="d-flex w-100 overflow-auto">
-              <Card imglink="/images/skill/html.png" imgalt="Wix.com">html</Card>
+              <Card imglink="/images/skill/html.png" imgalt="Wix.com">HTML</Card>
               <Card imglink="/images/skill/css.png" imgalt="seo">CSS</Card>
               <Card imglink="/images/skill/javascript.png" imgalt="JavaScript">JS</Card>
               <Card imglink="/images/skill/bootstrap.png" imgalt="Bootstrap">Bootstrap</Card>
@@ -78,7 +78,7 @@ const ProjectList = props =>{
           <div className="col-xl-5">
             <p className="h5 font-weight-bold text-warning">Technologies:</p>
             <div className="d-flex w-100 overflow-auto">
-              <Card imglink="/images/skill/html.png" imgalt="Wix.com">html</Card>
+              <Card imglink="/images/skill/html.png" imgalt="Wix.com">HTML</Card>
               <Card imglink="/images/skill/css.png" imgalt="seo">CSS</Card>
               <Card imglink="/images/skill/javascript.png" imgalt="JavaScript">JS</Card>
               <Card imglink="/images/skill/c-sharp.png" imgalt="C#">C#</Card>
