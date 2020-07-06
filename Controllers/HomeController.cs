@@ -148,7 +148,7 @@ namespace portfolio_backend.Controllers
                                                         .ToList()
                                 });
             }
-            return Json (new{ errors = "not owner"});
+            return Json (new{ errors = "don't have authority"});
         }
         
         //////////////////////////////////////////////////////////////////Message
@@ -180,14 +180,41 @@ namespace portfolio_backend.Controllers
                                     IsSignIn = false
                                 });
             }
-            var messagesList = databases.Messages
-                .OrderByDescending( m => m.CreateAt)
-                .Select(m => new { m.MessageId, m.Name, m.Email, m.Phone, m.Text, m.IsReplied, m.CreateAt})
-                .ToList();
-            return Json (new{   IsSignIn = true,
-                                messages = messagesList,
-                                user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
+            User select = databases.Users.FirstOrDefault(u => u.UserId== HttpContext.Session.GetInt32("UserId"));
+            if (select.Role=="Owner"){
+                var messagesList = databases.Messages
+                    .OrderByDescending( m => m.CreateAt)
+                    .Select(m => new { m.MessageId, m.Name, m.Email, m.Phone, m.Text, m.IsReplied, m.CreateAt})
+                    .ToList();
+                return Json (new{   IsSignIn = true,
+                                    messages = messagesList,
+                                    user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
                             });
+            }else if(select.Role=="Supervisor"){
+                var messagesList = databases.Messages
+                    .Where(m => m.IsReplied==false)
+                    .OrderByDescending( m => m.CreateAt)
+                    .Select(m => new { m.MessageId, m.Name, m.Email, m.Phone, m.Text, m.IsReplied, m.CreateAt})
+                    .ToList();
+                return Json (new{   IsSignIn = true,
+                                    messages = messagesList,
+                                    user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
+                            });
+            }else if(select.Role=="Staff"){
+                var messagesList = databases.Messages
+                    .OrderByDescending( m => m.CreateAt)
+                    .Select(m => new { m.MessageId, m.Name, m.Text, m.IsReplied, m.CreateAt})
+                    .ToList();
+                return Json (new{   IsSignIn = true,
+                                    messages = messagesList,
+                                    user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
+                            });
+            }else{
+                return Json (new{   IsSignIn = true,
+                                    errors = "do not have authority to view this",
+                                    user = databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"))
+                                });
+            }
         }
         
         [HttpGet("api/messages/{id}/{cmd}")]
@@ -201,18 +228,27 @@ namespace portfolio_backend.Controllers
                 return Json(new {errors = "can't find message"});
             }
             if (cmd == "replied")
-            {
-                select.IsReplied = true;
-                select.UpdateAt = DateTime.Now;
-                databases.SaveChanges();
-                return Json(new{msg = "replied"});
+            {   
+                if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner" ||
+                    databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Supervisor")
+                {
+                    select.IsReplied = true;
+                    select.UpdateAt = DateTime.Now;
+                    databases.SaveChanges();
+                    return Json(new{msg = "replied"});
+                }
+                return Json(new{ errors = "don't have authority"});
             }
             else if(cmd == "unreplied")
-            {
-                select.IsReplied = false;
-                select.UpdateAt = DateTime.Now;
-                databases.SaveChanges();
-                return Json(new{msg = "unreplied"});
+            {   
+                if (databases.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId")).Role == "Owner")
+                {
+                    select.IsReplied = false;
+                    select.UpdateAt = DateTime.Now;
+                    databases.SaveChanges();
+                    return Json(new{msg = "unreplied"});
+                }
+                return Json(new{ errors = "don't have authority"});
             }
             return Json(new{msg = "false api"});
         }
@@ -264,12 +300,24 @@ namespace portfolio_backend.Controllers
             {
                 return Json (new{ errors = "not login"});
             }
-            var invitations = databases.Invitations
-                .OrderBy(i => i.CreateAt)
-                .OrderBy(i => i.IsUsed)
-                .Select(i => new{i.Code,i.IsUsed,i.CreateAt,i.UpdateAt})
-                .ToList();
-            return Json(new { invitations = invitations });
+            User select = databases.Users.FirstOrDefault(u => u.UserId== HttpContext.Session.GetInt32("UserId"));
+            if(select.Role=="Owner"){
+                var invitations = databases.Invitations
+                    .OrderBy(i => i.CreateAt)
+                    .OrderBy(i => i.IsUsed)
+                    .Select(i => new{i.Code,i.IsUsed,i.CreateAt,i.UpdateAt})
+                    .ToList();
+                return Json(new { invitations = invitations });
+            }
+            else if(select.Role == "Supervisor" || select.Role == "Staff"){
+                var invitations = databases.Invitations
+                    .OrderBy(i => i.CreateAt)
+                    .Where(i => i.IsUsed==false)
+                    .Select(i => new{i.Code,i.IsUsed,i.CreateAt,i.UpdateAt})
+                    .ToList();
+                return Json(new { invitations = invitations });
+            }
+            return Json(new { errors = "do not have authority"});
         }
         
         /////////////////////////////////////////////////////////////

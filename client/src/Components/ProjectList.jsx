@@ -69,6 +69,7 @@ const ProjectList = props =>{
               <li>Mobile - Friendly</li>
               <li>A personal project was built by a combination of 2 different languages C# and JavaScript</li>
               <li>The backend use ASP.NET framework, and connect MySQL database</li>
+              <li>API protected</li>
               <li>The frontend use the React Application</li>
               <li>The website allows visitor leaves messages that only super user can see</li>
               <li>The new user must have an invitation code which is created by super user to complete register section.</li>
@@ -90,6 +91,7 @@ const ProjectList = props =>{
               <Card imglink="/images/skill/asp.png" imgalt="ASP">ASP Core</Card>
               <Card imglink="/images/skill/react.png" imgalt="React">React JS</Card>
               <Card imglink="/images/skill/nodejs.png" imgalt="NodeJS">Node JS</Card>
+              <Card imglink="/images/skill/aws.png" imgalt="aws">AWS</Card>
             </div>
           </div>
         </div>
