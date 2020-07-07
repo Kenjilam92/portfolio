@@ -39,12 +39,13 @@ const Register = props => {
                     setPass("");
                     setCFPass("");
                     setErrors({});
-                    props.login();  
+                    navigate("/blog");
+                    props.login();
                 }
             })
             .catch (err=>console.log(err));
         }
-        navigate("/blog");
+        
     }
     ////////////////////////////////////
     
