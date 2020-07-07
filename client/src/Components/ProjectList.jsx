@@ -64,12 +64,12 @@ const ProjectList = props =>{
                imgAlt="flashcards_game">
         <div className="row align-content-center">
           <div className="col-xl-6">
-            <p ><a className="h2 text-warning" href="https://github.com/Kenjilam92/flashcards_game">My Portfolio</a></p>
+            <p ><a className="h2 text-warning" href="https://github.com/Kenjilam92/portfolio">My Portfolio</a></p>
             <ul style={{marginLeft:  (-25)+"px"}}>
               <li>Mobile - Friendly</li>
               <li>A personal project was built by a combination of 2 different languages C# and JavaScript</li>
               <li>The backend use ASP.NET framework, and connect MySQL database</li>
-              <li>API protected</li>
+              <li>APIs protected</li>
               <li>The frontend use the React Application</li>
               <li>The website allows visitor leaves messages that only super user can see</li>
               <li>The new user must have an invitation code which is created by super user to complete register section.</li>

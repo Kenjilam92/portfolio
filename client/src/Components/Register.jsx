@@ -39,8 +39,8 @@ const Register = props => {
                     setPass("");
                     setCFPass("");
                     setErrors({});
-                    navigate("/blog");
                     props.login();
+                    navigate("/blog");
                 }
             })
             .catch (err=>console.log(err));

@@ -9,7 +9,7 @@ const PleaseSignIn = props =>{
                      alt="Kenji Lam"/>
             </div>
             <div className="col-sm-9">
-              <p className="h1 text-warning">Sorry! Please sign in to see this page!</p>
+              <p className="h1 text-warning">Please sign in to see this page!</p>
             </div>
         </div>
     );
