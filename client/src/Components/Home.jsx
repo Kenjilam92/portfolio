@@ -3,7 +3,6 @@ import {Link} from "@reach/router";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import json2mq from 'json2mq';
 const Home = props => {
-    // const [heroText,setHeroText] = useState({});
     const [img1,setImg1] = useState("");
     const matches = useMediaQuery(
         json2mq({
