@@ -9,7 +9,7 @@ import "bootstrap/js/dist/collapse.js";
 import "./App.css";
 /////////////Components
 import Menu from "./Components/Menu";
-import Home from "./Components/Home";
+import Contact from "./Components/Contact";
 import Footer from './Components/Footer';
 import Login from './Components/Login';
 import MessagesP from './Components/Messages';
@@ -20,6 +20,7 @@ import ProjectList from './Components/ProjectList';
 import Admin from './Components/Admin';
 import UserPage from './Components/UserPage';
 import Error404 from './Components/Error404';
+import Home from "./Components/Home"
 
 function App() {
   const [LoginStatus,setLoginStatus] = useState (false);
@@ -42,52 +43,57 @@ function App() {
     CheckBackEndSession();
   },[]);
 
+  const contentStyle = {
+    height: 100+"%",
+    width: 100+"%",
+    position: "absolute"
+  }
   return (
-    <div  className="d-flex flex-column justify-content-between w-100 h-100  position-absolute">
-      <div className="align-self-start w-100">
-        <Menu loginStatus={LoginStatus}
-              setLoginStatus={setLoginStatus}
-              user={User}
-              setUser={setUser}/>
-      </div>
-      <div className="align-self-center w-100">
-        <Router>
-          <Home        path ="/"/>
-          <AboutMe     path ="/aboutme"/>
-          <ProjectList path ="/projects"/>
-          <Progressing path ="/progressing"/>
-          <Error404    path ="*"/>
+    <div className="d-flex flex-column justify-content-between w-100 h-100"
+        style={contentStyle}>
+      <Menu loginStatus={LoginStatus}
+            setLoginStatus={setLoginStatus}
+            user={User}
+            setUser={setUser}/>
+      <Router className="w-100 flex-fill" >
+        <Contact     path ="/contact"/>
+        <AboutMe     path ="/aboutme"/>
+        <ProjectList path ="/projects"/>
+        <Progressing path ="/progressing"/>
+        <Error404    path ="*"/>
 
-          <Login       path ="/login"
-                       loginStatus={LoginStatus}
-                       login={setLoginStatus}
-                       user={User}
-                       setUser={setUser}/>
+        <Login       path ="/login"
+                      loginStatus={LoginStatus}
+                      login={setLoginStatus}
+                      user={User}
+                      setUser={setUser}/>
 
-          <MessagesP   path ="/messages"   
-                       login={LoginStatus} 
-                       user={User}/>
+        <MessagesP   path ="/messages"   
+                      login={LoginStatus} 
+                      user={User}/>
 
-          <Invitation  path ="/invitation"
-                       user={User}
-                       login={LoginStatus}/>
+        <Invitation  path ="/invitation"
+                      user={User}
+                      login={LoginStatus}/>
 
-          <Admin       path ="/admin"      
-                       user={User}
-                       login={LoginStatus}
-                       />
+        <Admin       path ="/admin"      
+                      user={User}
+                      login={LoginStatus}
+                      />
 
-          <UserPage    path ="/blog"
-                       checkSession={CheckBackEndSession}
-                       user={User}
-                       login={LoginStatus}/>
+        <UserPage    path ="/blog"
+                      checkSession={CheckBackEndSession}
+                      user={User}
+                      login={LoginStatus}/>
 
-        </Router>
-      </div>
-      <div className="align-self-end w-100">
-        <Footer/>
-      </div>
-  </div>
+        <Home        path ="/"/>
+      </Router>
+      <Footer/>
+    </div>
+    
+    
+    
+
   );
 }
 

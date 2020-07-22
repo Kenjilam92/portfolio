@@ -34,7 +34,7 @@ const Menu = props => {
     <>
     {matches?
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-    <Link className="navbar-brand" to="/">Kenji Lam</Link>
+    <Link className="navbar-brand ml-3" to="/">Kenji Lam</Link>
     <button className="navbar-toggler" type="button" 
             data-toggle="collapse" 
             data-target="#navbarNavAltMarkup" 
@@ -64,6 +64,10 @@ const Menu = props => {
                   className="btn btn-success"
                   onClick={hideNavbar}
                   >Projects
+          </Link>
+          <Link   to = "/contact"
+                  className="btn btn-success"
+                  >Contact
           </Link>
           {props.loginStatus?
           <Link   to ="/blog"
@@ -105,6 +109,10 @@ const Menu = props => {
           <Link   to ="/projects"
                   className="btn btn-success"
                   >Projects
+          </Link>
+          <Link   to = "/contact"
+                  className="btn btn-success"
+                  >Contact
           </Link>
           {props.loginStatus?
           <Link   to ="/blog"

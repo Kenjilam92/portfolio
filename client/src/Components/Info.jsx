@@ -31,22 +31,22 @@ const Info = props => {
               <p className="h4 col-sm-7 text-nowrap font-italic">Digital Marketing Specialist</p>
           </div>
           }
-          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white text-nowrap text-sm-left text-center">
             <p className="col-sm-5 font-weight-bold">Location:</p>
             <p className="col-sm-7">Washington D.C. Metropolian Area</p>
           </div>
 
-          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white text-sm-left text-center">
             <p className="col-sm-5 font-weight-bold">Email:</p>
             <p className="col-sm-7">kenji.lam.92@gmail.com</p>
           </div>
 
-          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white text-sm-left text-center">
             <p className="col-sm-5 font-weight-bold">Phone:</p>
             <p className="col-sm-7">703-622-0116</p>
           </div>
 
-          <div className="row w-100 mb-2 align-items-end border-bottom border-white">
+          <div className="row w-100 mb-2 align-items-end border-bottom border-white text-sm-left text-center">
             <p className="col-sm-5 font-weight-bold">Career Status:</p>
             <p className="col-sm-7">Freelancer</p>
           </div>
