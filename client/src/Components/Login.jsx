@@ -35,13 +35,13 @@ const Login = props =>{
     const RegisterNow = e => props.checkSession();
 
     return(
-        <>
-        <div className="row m-0 p-3 text-white bg-secondary justify-content-center">
+        <div className="d-flex h-100 w-100 align-items-center">
+        <div className="row w-100 m-0 p-3 text-white bg-secondary justify-content-between">
             <div className="col-md-6 ">
                 <Register login={RegisterNow}/>
             </div>
             {/* //////////////////////////// */}
-            <form onSubmit={Login} className="col-md-6 order-md-2 order-first form-group ">
+            <form onSubmit={Login} className="col-md-5 order-md-2 order-first form-group ">
                 <h3 className="text-center mb-4">Login</h3>
                 <div className="row mb-2 justify-content-end align-items-end">
                     <label  htmlFor="LoginEmail"
@@ -81,7 +81,7 @@ const Login = props =>{
                 </div>
             </form>
         </div>
-        </>
+        </div>
     );
 }
 
