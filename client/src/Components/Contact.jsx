@@ -4,7 +4,7 @@ import SendMessage from "./SendMessage";
 
 const Contact = props =>{
     return (
-        <div className="row h-100 m-0 p-3 text-white justify-content-center align-items-center" style={{minHeight : 35+ "vh"}}>  
+        <div className="row h-100 m-0 p-3 text-white justify-content-center align-items-md-center" style={{minHeight : 35+ "vh"}}>  
           {/* picture */}
           <div className="col-xl-2 col-md-4 text-center me">
             <img className="w-100 "src="/images/kenjilam92.jpg" alt="Kenji Lam"/>

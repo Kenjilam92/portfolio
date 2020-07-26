@@ -48,47 +48,52 @@ function App() {
     width: 100+"%",
     position: "absolute"
   }
+
   return (
     <div className="d-flex flex-column justify-content-between w-100 h-100"
         style={contentStyle}>
+      <div className="w-100">
       <Menu loginStatus={LoginStatus}
             setLoginStatus={setLoginStatus}
             user={User}
             setUser={setUser}/>
-      <Router className="w-100 flex-fill" >
+      </div>
+      <Router className="w-100 h-100 flex-fill overflow-auto" >
         <Contact     path ="/contact"/>
         <AboutMe     path ="/aboutme"/>
         <ProjectList path ="/projects"/>
         <Progressing path ="/progressing"/>
         <Error404    path ="*"/>
 
-        <Login       path ="/login"
-                      loginStatus={LoginStatus}
-                      login={setLoginStatus}
-                      user={User}
-                      setUser={setUser}/>
+        <Login      path ="/login"
+                    loginStatus={LoginStatus}
+                    login={setLoginStatus}
+                    user={User}
+                    setUser={setUser}/>
 
-        <MessagesP   path ="/messages"   
-                      login={LoginStatus} 
-                      user={User}/>
+        <MessagesP  path ="/messages"   
+                    login={LoginStatus} 
+                    user={User}/>
 
-        <Invitation  path ="/invitation"
-                      user={User}
-                      login={LoginStatus}/>
+        <Invitation path ="/invitation"
+                    user={User}
+                    login={LoginStatus}/>
 
-        <Admin       path ="/admin"      
-                      user={User}
-                      login={LoginStatus}
-                      />
+        <Admin      path ="/admin"      
+                    user={User}
+                    login={LoginStatus}
+                    />
 
-        <UserPage    path ="/blog"
-                      checkSession={CheckBackEndSession}
-                      user={User}
-                      login={LoginStatus}/>
+        <UserPage   path ="/blog"
+                    checkSession={CheckBackEndSession}
+                    user={User}
+                    login={LoginStatus}/>
 
-        <Home        path ="/"/>
+        <Home       path ="/"/>
       </Router>
-      <Footer/>
+      <div className="w-100">
+        <Footer/>
+      </div>
     </div>
     
     

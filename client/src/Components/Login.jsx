@@ -35,8 +35,8 @@ const Login = props =>{
     const RegisterNow = e => props.checkSession();
 
     return(
-        <div className="d-flex h-100 w-100 align-items-center">
-        <div className="row w-100 m-0 p-3 text-white bg-secondary justify-content-between">
+        <div className="d-flex align-items-sm-center w-100 h-100 ">
+        <div className="row w-100 m-0 p-3 text-white justify-content-between">
             <div className="col-md-6 ">
                 <Register login={RegisterNow}/>
             </div>
